@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=3 uid="uid://7joqdlgov1q3"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_arxrv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kkmko"]
+albedo_color = Color(0.335314, 0.720241, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0gikr"]
+material = SubResource("StandardMaterial3D_kkmko")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s8iyy"]
+albedo_color = Color(0.253376, 0.107141, 0.0456569, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gydxj"]
+material = SubResource("StandardMaterial3D_s8iyy")
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_70ggj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8gft"]
+albedo_color = Color(0.41, 0.41, 0.41, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_074ds"]
+material = SubResource("StandardMaterial3D_k8gft")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x7tb2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hbymr"]
+albedo_color = Color(0.308626, 0.249936, 0.21997, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a45lu"]
+material = SubResource("StandardMaterial3D_hbymr")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="GridMap" type="GridMap" parent="."]
+
+[node name="unit" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.26838, 3.48871, -10.3517)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="unit"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_arxrv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="unit/CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_0gikr")
+skeleton = NodePath("../..")
+
+[node name="camera-follow" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.13579, 5.45392, -10.267)
+
+[node name="Camera3D" type="Camera3D" parent="camera-follow"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+
+[node name="environment" type="Node3D" parent="."]
+
+[node name="floor" type="MeshInstance3D" parent="environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0217667, 0.0262518, 0.0216484)
+mesh = SubResource("BoxMesh_gydxj")
+
+[node name="floor-mesh" type="StaticBody3D" parent="environment/floor"]
+
+[node name="floor-shape" type="CollisionShape3D" parent="environment/floor/floor-mesh"]
+shape = SubResource("BoxShape3D_70ggj")
+
+[node name="box" type="MeshInstance3D" parent="environment"]
+transform = Transform3D(9.02473, 0, 0, 0, 3.1755, 0, 0, 0, 7.61627, 3.68438, 1.63223, -9.50081)
+mesh = SubResource("BoxMesh_074ds")
+
+[node name="box-mesh" type="StaticBody3D" parent="environment/box"]
+
+[node name="box-shape" type="CollisionShape3D" parent="environment/box/box-mesh"]
+shape = SubResource("BoxShape3D_x7tb2")
+
+[node name="ramp" type="MeshInstance3D" parent="environment"]
+transform = Transform3D(11.924, -0.740866, 0, 3.19503, 2.76495, 0, 0, 0, 7.61628, -6.39148, 0.262177, -9.50663)
+mesh = SubResource("BoxMesh_a45lu")
+
+[node name="ramp-mesh" type="StaticBody3D" parent="environment/ramp"]
+
+[node name="ramp-shape" type="CollisionShape3D" parent="environment/ramp/ramp-mesh"]
+shape = SubResource("BoxShape3D_x7tb2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.836516, 0.158494, 0.524519, -0.5, 0.612372, 0.612372, -0.224144, -0.774519, 0.591506, 5.64426, 11.2185, 2.25818)
