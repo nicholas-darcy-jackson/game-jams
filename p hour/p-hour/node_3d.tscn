@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://7joqdlgov1q3"]
+[gd_scene load_steps=15 format=3 uid="uid://7joqdlgov1q3"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_w4fxq"]
+[ext_resource type="Script" path="res://main.gd" id="1_wjrvc"]
 [ext_resource type="Script" path="res://camera_spring_arm.gd" id="2_n0aqf"]
+[ext_resource type="PackedScene" uid="uid://ba8cixwykkg2" path="res://ui/pause_menu.tscn" id="4_ghjk6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_arxrv"]
 
@@ -25,14 +27,22 @@ albedo_color = Color(0.308626, 0.249936, 0.21997, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_a45lu"]
 material = SubResource("StandardMaterial3D_hbymr")
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vg0yr"]
+albedo_color = Color(0.222121, 0.189795, 0.059099, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_q7gxr"]
+material = SubResource("StandardMaterial3D_vg0yr")
+
+[node name="main" type="Node3D"]
+process_mode = 1
+script = ExtResource("1_wjrvc")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.398407, -0.852293, 0.338922, 0.449241, 0.140831, 0.882241, -0.799659, 0.503748, 0.326777, 5.92944, 11.4784, -2.79051)
 
 [node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera")]
 script = ExtResource("1_w4fxq")
-camera = NodePath("../CameraSpringArm/Camera3D")
+camera = NodePath("../camera-follow-point/Camera3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -45,7 +55,7 @@ skeleton = NodePath("../..")
 [node name="environment" type="Node3D" parent="."]
 
 [node name="box" type="MeshInstance3D" parent="environment"]
-transform = Transform3D(9.02473, 0, 0, 0, 3.1755, 0, 0, 0, 7.61627, 3.68438, 1.63223, -9.50081)
+transform = Transform3D(-5.61667, 0, -5.96146, 0, 3.1755, 0, 7.06391, 0, -4.74009, -17.1733, 1.63223, 32.5901)
 mesh = SubResource("BoxMesh_074ds")
 
 [node name="box-mesh" type="StaticBody3D" parent="environment/box"]
@@ -54,7 +64,7 @@ mesh = SubResource("BoxMesh_074ds")
 shape = SubResource("BoxShape3D_x7tb2")
 
 [node name="ramp" type="MeshInstance3D" parent="environment"]
-transform = Transform3D(11.924, -0.740866, 0, 3.19503, 2.76495, 0, 0, 0, 7.61628, -6.39148, 0.262177, -9.50663)
+transform = Transform3D(-7.33489, 0.528405, -5.96252, 3.82847, 2.72116, -0.0855194, 9.16145, -0.714085, -4.73801, -10.9793, -0.0667109, 24.8692)
 mesh = SubResource("BoxMesh_a45lu")
 
 [node name="ramp-mesh" type="StaticBody3D" parent="environment/ramp"]
@@ -63,8 +73,8 @@ mesh = SubResource("BoxMesh_a45lu")
 shape = SubResource("BoxShape3D_x7tb2")
 
 [node name="box2" type="MeshInstance3D" parent="environment"]
-transform = Transform3D(359.812, 0, 0, 0, 10.0838, 0, 0, 0, 299.43, -2.48972, -4.83187, -0.486137)
-mesh = SubResource("BoxMesh_074ds")
+transform = Transform3D(359.812, 0, 0, 0, 10.0838, 0, 0, 0, 299.43, -2.48972, -5.26629, -0.486137)
+mesh = SubResource("BoxMesh_q7gxr")
 skeleton = NodePath("../box")
 
 [node name="box-mesh" type="StaticBody3D" parent="environment/box2"]
@@ -72,12 +82,27 @@ skeleton = NodePath("../box")
 [node name="box-shape" type="CollisionShape3D" parent="environment/box2/box-mesh"]
 shape = SubResource("BoxShape3D_x7tb2")
 
-[node name="CameraSpringArm" type="SpringArm3D" parent="." node_paths=PackedStringArray("player")]
-transform = Transform3D(0.866025, 0.353553, 0.353553, 0, 0.707107, -0.707107, -0.5, 0.612372, 0.612372, 0, 12, 0)
-spring_length = -15.0
+[node name="box3" type="MeshInstance3D" parent="environment"]
+transform = Transform3D(53.2332, 0, -43.7567, 0, 10.0838, 0, 44.3979, 0, 52.4644, 33.3087, 4.59705, 39.9075)
+mesh = SubResource("BoxMesh_074ds")
+skeleton = NodePath("../box")
+
+[node name="box-mesh" type="StaticBody3D" parent="environment/box3"]
+
+[node name="box-shape" type="CollisionShape3D" parent="environment/box3/box-mesh"]
+shape = SubResource("BoxShape3D_x7tb2")
+
+[node name="camera-follow-point" type="Node3D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("2_n0aqf")
 player = NodePath("../player")
 
-[node name="Camera3D" type="Camera3D" parent="CameraSpringArm"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+[node name="Camera3D" type="Camera3D" parent="camera-follow-point"]
+transform = Transform3D(-1, 6.18173e-08, -6.18173e-08, 0, 0.707107, 0.707107, 8.74228e-08, 0.707107, -0.707107, 0, 74.0113, -73.6094)
+projection = 1
 fov = 69.8281
+size = 30.0
+
+[node name="pause-menu" parent="camera-follow-point/Camera3D" node_paths=PackedStringArray("main") instance=ExtResource("4_ghjk6")]
+process_mode = 3
+visible = false
+main = NodePath("../../..")
