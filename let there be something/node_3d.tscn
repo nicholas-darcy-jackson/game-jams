@@ -1,20 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://7joqdlgov1q3"]
+[gd_scene load_steps=14 format=3 uid="uid://7joqdlgov1q3"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_w4fxq"]
 [ext_resource type="Script" path="res://main.gd" id="1_wjrvc"]
 [ext_resource type="Script" path="res://camera_spring_arm.gd" id="2_n0aqf"]
+[ext_resource type="PackedScene" uid="uid://c5sed8nvc3itj" path="res://entities/player.tscn" id="2_ux3bi"]
 [ext_resource type="PackedScene" uid="uid://ba8cixwykkg2" path="res://ui/pause_menu.tscn" id="4_ghjk6"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_arxrv"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kkmko"]
-albedo_color = Color(0.335314, 0.720241, 0, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_0gikr"]
-material = SubResource("StandardMaterial3D_kkmko")
+[ext_resource type="PackedScene" uid="uid://db3psfw5hvu6n" path="res://blocks/bit.tscn" id="5_lpj1k"]
+[ext_resource type="Script" path="res://spawn_manager.gd" id="6_dvxfg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8gft"]
-albedo_color = Color(0.149668, 0.215027, 0.0701097, 1)
+albedo_color = Color(0.132117, 0.21682, 0.113454, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_074ds"]
 material = SubResource("StandardMaterial3D_k8gft")
@@ -38,19 +32,12 @@ process_mode = 1
 script = ExtResource("1_wjrvc")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.398407, -0.852293, 0.338922, 0.449241, 0.140831, 0.882241, -0.799659, 0.503748, 0.326777, 5.92944, 11.4784, -2.79051)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 5.92944, 11.8684, -2.79051)
+shadow_enabled = true
 
-[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera")]
-script = ExtResource("1_w4fxq")
+[node name="player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_ux3bi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.88342, 0)
 camera = NodePath("../camera-follow-point/Camera3D")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_arxrv")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="player/CollisionShape3D"]
-mesh = SubResource("CapsuleMesh_0gikr")
-skeleton = NodePath("../..")
 
 [node name="environment" type="Node3D" parent="."]
 
@@ -72,14 +59,14 @@ mesh = SubResource("BoxMesh_a45lu")
 [node name="ramp-shape" type="CollisionShape3D" parent="environment/ramp/ramp-mesh"]
 shape = SubResource("BoxShape3D_x7tb2")
 
-[node name="box2" type="MeshInstance3D" parent="environment"]
+[node name="floor" type="MeshInstance3D" parent="environment"]
 transform = Transform3D(359.812, 0, 0, 0, 10.0838, 0, 0, 0, 299.43, -2.48972, -5.26629, -0.486137)
 mesh = SubResource("BoxMesh_q7gxr")
 skeleton = NodePath("../box")
 
-[node name="box-mesh" type="StaticBody3D" parent="environment/box2"]
+[node name="box-mesh" type="StaticBody3D" parent="environment/floor"]
 
-[node name="box-shape" type="CollisionShape3D" parent="environment/box2/box-mesh"]
+[node name="box-shape" type="CollisionShape3D" parent="environment/floor/box-mesh"]
 shape = SubResource("BoxShape3D_x7tb2")
 
 [node name="box3" type="MeshInstance3D" parent="environment"]
@@ -106,3 +93,10 @@ size = 30.0
 process_mode = 3
 visible = false
 main = NodePath("../../..")
+
+[node name="bit" parent="." instance=ExtResource("5_lpj1k")]
+transform = Transform3D(1, 0, 0, 0, 0.999847, 0.0174873, 0, -0.0174873, 0.999847, 0, 1.61365, 8.28943)
+
+[node name="spawn-manager" type="Node3D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("6_dvxfg")
+player = NodePath("../player")
