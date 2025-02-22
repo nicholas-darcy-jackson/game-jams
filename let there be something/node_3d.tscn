@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://7joqdlgov1q3"]
+[gd_scene load_steps=15 format=3 uid="uid://7joqdlgov1q3"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_wjrvc"]
 [ext_resource type="Script" path="res://camera_spring_arm.gd" id="2_n0aqf"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ba8cixwykkg2" path="res://ui/pause_menu.tscn" id="4_ghjk6"]
 [ext_resource type="PackedScene" uid="uid://db3psfw5hvu6n" path="res://blocks/bit.tscn" id="5_lpj1k"]
 [ext_resource type="Script" path="res://spawn_manager.gd" id="6_dvxfg"]
+[ext_resource type="PackedScene" uid="uid://c7rdyn4cryv67" path="res://cursor.tscn" id="7_p0frb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8gft"]
 albedo_color = Color(0.132117, 0.21682, 0.113454, 1)
@@ -100,3 +101,5 @@ transform = Transform3D(1, 0, 0, 0, 0.999847, 0.0174873, 0, -0.0174873, 0.999847
 [node name="spawn-manager" type="Node3D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("6_dvxfg")
 player = NodePath("../player")
+
+[node name="MeshInstance3D" parent="spawn-manager" instance=ExtResource("7_p0frb")]
