@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://lmceujrdl86c"]
+
+[ext_resource type="PackedScene" uid="uid://de3oab5n00jbg" path="res://models/machine-producer.blend" id="1_s0x5b"]
+
+[node name="producer" type="Node3D"]
+
+[node name="machine-producer" parent="." instance=ExtResource("1_s0x5b")]
