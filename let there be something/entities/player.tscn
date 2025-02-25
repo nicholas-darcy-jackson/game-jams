@@ -4,22 +4,24 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_arxrv"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kkmko"]
-albedo_color = Color(0.335314, 0.720241, 0, 1)
+[sub_resource type="CylinderMesh" id="CylinderMesh_7hi2w"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_0gikr"]
-material = SubResource("StandardMaterial3D_kkmko")
+[sub_resource type="BoxMesh" id="BoxMesh_dqm4b"]
 
 [node name="player" type="CharacterBody3D"]
 collision_layer = 2
-collision_mask = 7
+collision_mask = 32775
 script = ExtResource("1_3plyg")
-push_force = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_arxrv")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
-mesh = SubResource("CapsuleMesh_0gikr")
+mesh = SubResource("CylinderMesh_7hi2w")
 skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="CollisionShape3D"]
+transform = Transform3D(0.97, 0, 0, 0, 0.355, 0, 0, 0, 0.835, 0.00762856, 0.647339, -0.405022)
+mesh = SubResource("BoxMesh_dqm4b")
+skeleton = NodePath("../MeshInstance3D")

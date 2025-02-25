@@ -1,34 +1,15 @@
-[gd_scene load_steps=17 format=3 uid="uid://7joqdlgov1q3"]
+[gd_scene load_steps=11 format=3 uid="uid://7joqdlgov1q3"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_wjrvc"]
 [ext_resource type="Script" path="res://camera_spring_arm.gd" id="2_n0aqf"]
 [ext_resource type="PackedScene" uid="uid://c5sed8nvc3itj" path="res://entities/player.tscn" id="2_ux3bi"]
+[ext_resource type="MeshLibrary" uid="uid://cgv0xgg2bw3nj" path="res://environment/gridmap/void-mesh-library.tres" id="3_vq571"]
 [ext_resource type="PackedScene" uid="uid://ba8cixwykkg2" path="res://ui/pause_menu.tscn" id="4_ghjk6"]
-[ext_resource type="PackedScene" uid="uid://db3psfw5hvu6n" path="res://blocks/bit.tscn" id="5_lpj1k"]
+[ext_resource type="PackedScene" uid="uid://0bq6vnm285wa" path="res://environment/planes/player-plane.tscn" id="4_xoyi6"]
+[ext_resource type="PackedScene" uid="uid://bddydtuu7ydrb" path="res://environment/planes/destroy-plane.tscn" id="5_qmy13"]
 [ext_resource type="Script" path="res://spawn_manager.gd" id="6_dvxfg"]
 [ext_resource type="PackedScene" uid="uid://c7rdyn4cryv67" path="res://cursor.tscn" id="7_p0frb"]
-[ext_resource type="PackedScene" uid="uid://lmceujrdl86c" path="res://blocks/producer.tscn" id="8_p31j0"]
-[ext_resource type="PackedScene" uid="uid://ck781vsc6kmwk" path="res://blocks/maker.tscn" id="9_bvmth"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k8gft"]
-albedo_color = Color(0.132117, 0.21682, 0.113454, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_074ds"]
-material = SubResource("StandardMaterial3D_k8gft")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_x7tb2"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hbymr"]
-albedo_color = Color(0.308626, 0.249936, 0.21997, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_a45lu"]
-material = SubResource("StandardMaterial3D_hbymr")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vg0yr"]
-albedo_color = Color(0.222121, 0.189795, 0.059099, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_q7gxr"]
-material = SubResource("StandardMaterial3D_vg0yr")
+[ext_resource type="PackedScene" uid="uid://dx0k2o5mjvquj" path="res://blocks/machine_producer.tscn" id="10_i3qly"]
 
 [node name="main" type="Node3D"]
 process_mode = 1
@@ -39,48 +20,22 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 5.9294
 shadow_enabled = true
 
 [node name="player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_ux3bi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.88342, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15624, 0)
 camera = NodePath("../camera-follow-point/Camera3D")
 
-[node name="environment" type="Node3D" parent="."]
+[node name="void-gridmap" type="GridMap" parent="."]
+mesh_library = ExtResource("3_vq571")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(-1, 0, 0, -65536, 0, 0, -65535, 65535, 0, -65536, 65535, 0, -1, 65535, 0, -2, 0, 0, -65536, 1, 0, -1, 1, 0, -65535, 0, 0, -1, 65534, 0, -1, 2, 0, -65536, 3, 0, -65535, 3, 0, -65534, 2, 0, -65534, 1, 0, -65534, 0, 0, -65534, 65535, 0, -65534, 65534, 0, -65535, 65534, 0, -65535, 1, 0, -65535, 2, 0, -65536, 2, 0, -65534, 3, 0, -65534, 4, 0, -65535, 4, 0, -2, 5, 0, -3, 4, 0, -3, 3, 0, -4, 2, 0, -4, 1, 0, -4, 0, 0, -4, 65535, 0, -4, 65534, 0, -3, 65534, 0, -3, 65533, 0, -2, 65533, 0, -1, 65533, 0, -65536, 65533, 0, -65535, 65533, 0, -65534, 65533, 0, -65533, 65533, 0, -65532, 65533, 0, -65532, 65534, 0, -65531, 65534, 0, -65531, 65535, 0, -65530, 65535, 0, -65530, 0, 0, -65530, 1, 0, -65531, 1, 0, -65531, 2, 0, -65532, 2, 0, -65532, 3, 0, -65533, 3, 0, -2, 65535, 0, -2, 65534, 0, -65536, 65532, 0, -65535, 65532, 0, -65534, 65532, 0, -65533, 65534, 0, -65532, 65535, 0, -65532, 0, 0, -65532, 1, 0, -65533, 4, 0, -3, 5, 0, -4, 4, 0, -4, 3, 0, -5, 2, 0, -5, 1, 0, -5, 0, 0, -5, 65535, 0, -5, 65534, 0, -65533, 65535, 0, -65531, 0, 0, -3, 65535, 0, -65533, 0, 0, -65533, 1, 0, -65533, 2, 0, -65536, 65534, 0, -3, 0, 0, -65535, 65531, 0, -65534, 65531, 0, -65534, 65530, 0, -65534, 65529, 0, -65534, 65528, 0, -65535, 65530, 0, -65535, 65529, 0, -65535, 65528, 0, -65536, 65530, 0, -65536, 65531, 0, -1, 65532, 0, -6, 1, 0, -6, 2, 0, -6, 3, 0, -7, 3, 0, -5, 3, 0, -5, 4, 0, -4, 5, 0, -3, 6, 0, -2, 7, 0, -2, 8, 0, -3, 7, 0, -2, 6, 0, -65531, 65533, 0, -65531, 65532, 0, -65530, 65532, 0, -65530, 65531, 0, -65529, 65531, 0, -65528, 65530, 0, -65528, 65531, 0, -65528, 65532, 0, -65529, 65532, 0, -65529, 65533, 0, -65530, 65533, 0, -65530, 65534, 0, -65528, 65533, 0, -65531, 65531, 0, -65532, 65532, 0, -65533, 65532, 0, -4, 65533, 0, -4, 65532, 0, -5, 65532, 0, -6, 65532, 0, -6, 65531, 0, -7, 65531, 0, -8, 65531, 0, -7, 65532, 0, -7, 65533, 0, -6, 65533, 0, -6, 65534, 0, -5, 65533, 0, -65532, 4, 0, -65532, 5, 0, -65531, 6, 0, -65530, 7, 0, -65529, 7, 0, -65529, 8, 0, -65528, 8, 0, -65527, 8, 0, -65526, 8, 0, -65525, 8, 0, -65524, 8, 0, -65528, 7, 0, -65530, 6, 0, -65531, 5, 0, -65534, 5, 0, -65532, 6, 0, -65533, 5, 0)
+}
+metadata/_editor_floor_ = Vector3(0, -1, 0)
 
-[node name="box" type="MeshInstance3D" parent="environment"]
-transform = Transform3D(-5.61667, 0, -5.96146, 0, 3.1755, 0, 7.06391, 0, -4.74009, -17.1733, 1.63223, 32.5901)
-mesh = SubResource("BoxMesh_074ds")
+[node name="player-plane" parent="." instance=ExtResource("4_xoyi6")]
 
-[node name="box-mesh" type="StaticBody3D" parent="environment/box"]
-
-[node name="box-shape" type="CollisionShape3D" parent="environment/box/box-mesh"]
-shape = SubResource("BoxShape3D_x7tb2")
-
-[node name="ramp" type="MeshInstance3D" parent="environment"]
-transform = Transform3D(-7.33489, 0.528405, -5.96252, 3.82847, 2.72116, -0.0855194, 9.16145, -0.714085, -4.73801, -10.9793, -0.0667109, 24.8692)
-mesh = SubResource("BoxMesh_a45lu")
-
-[node name="ramp-mesh" type="StaticBody3D" parent="environment/ramp"]
-
-[node name="ramp-shape" type="CollisionShape3D" parent="environment/ramp/ramp-mesh"]
-shape = SubResource("BoxShape3D_x7tb2")
-
-[node name="floor" type="MeshInstance3D" parent="environment"]
-transform = Transform3D(359.812, 0, 0, 0, 10.0838, 0, 0, 0, 299.43, -2.48972, -5.26629, -0.486137)
-mesh = SubResource("BoxMesh_q7gxr")
-skeleton = NodePath("../box")
-
-[node name="box-mesh" type="StaticBody3D" parent="environment/floor"]
-
-[node name="box-shape" type="CollisionShape3D" parent="environment/floor/box-mesh"]
-shape = SubResource("BoxShape3D_x7tb2")
-
-[node name="box3" type="MeshInstance3D" parent="environment"]
-transform = Transform3D(53.2332, 0, -43.7567, 0, 10.0838, 0, 44.3979, 0, 52.4644, 33.3087, 4.59705, 39.9075)
-mesh = SubResource("BoxMesh_074ds")
-skeleton = NodePath("../box")
-
-[node name="box-mesh" type="StaticBody3D" parent="environment/box3"]
-
-[node name="box-shape" type="CollisionShape3D" parent="environment/box3/box-mesh"]
-shape = SubResource("BoxShape3D_x7tb2")
+[node name="destroy-plane" parent="." node_paths=PackedStringArray("gridmap") instance=ExtResource("5_qmy13")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+gridmap = NodePath("../void-gridmap")
 
 [node name="camera-follow-point" type="Node3D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("2_n0aqf")
@@ -97,17 +52,11 @@ process_mode = 3
 visible = false
 main = NodePath("../../..")
 
-[node name="bit" parent="." instance=ExtResource("5_lpj1k")]
-transform = Transform3D(1, 0, 0, 0, 0.999847, 0.0174873, 0, -0.0174873, 0.999847, 0, 1.61365, 8.28943)
-
 [node name="spawn-manager" type="Node3D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("6_dvxfg")
 player = NodePath("../player")
 
 [node name="MeshInstance3D" parent="spawn-manager" instance=ExtResource("7_p0frb")]
 
-[node name="producer" parent="." instance=ExtResource("8_p31j0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.9654, 0, 12.4611)
-
-[node name="maker" parent="." instance=ExtResource("9_bvmth")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.5835, -0.22439, -13.6797)
+[node name="machine-producer" parent="." instance=ExtResource("10_i3qly")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.29376, 0, -4.37976)

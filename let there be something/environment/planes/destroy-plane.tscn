@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bddydtuu7ydrb"]
+
+[ext_resource type="Script" path="res://environment/planes/destroy_plane.gd" id="1_78qvm"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_sgu8p"]
+
+[node name="destroy-plane" type="StaticBody3D"]
+collision_layer = 0
+collision_mask = 7
+script = ExtResource("1_78qvm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("WorldBoundaryShape3D_sgu8p")

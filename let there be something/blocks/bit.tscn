@@ -1,22 +1,25 @@
 [gd_scene load_steps=4 format=3 uid="uid://db3psfw5hvu6n"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_x7tb2"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_a063w"]
+radius = 0.2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_68tbv"]
-albedo_color = Color(1, 1, 1, 0.403922)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0vt3a"]
+albedo_color = Color(0.63, 0.606375, 0.4725, 0.262745)
+metallic = 0.5
+roughness = 0.5
 
-[sub_resource type="BoxMesh" id="BoxMesh_u4vnt"]
-material = SubResource("StandardMaterial3D_68tbv")
+[sub_resource type="SphereMesh" id="SphereMesh_t3vmw"]
+material = SubResource("StandardMaterial3D_0vt3a")
+radius = 0.2
+height = 0.4
 
-[node name="box-mesh" type="RigidBody3D"]
+[node name="bit-rigidbody" type="RigidBody3D"]
 collision_layer = 4
 collision_mask = 7
-mass = 20.0
 
-[node name="box-shape" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
-shape = SubResource("BoxShape3D_x7tb2")
+[node name="bit-collider" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_a063w")
 
-[node name="bit" type="MeshInstance3D" parent="box-shape"]
-mesh = SubResource("BoxMesh_u4vnt")
-skeleton = NodePath("../..")
+[node name="bit-mesh" type="MeshInstance3D" parent="bit-collider"]
+mesh = SubResource("SphereMesh_t3vmw")
+skeleton = NodePath("../../..")
