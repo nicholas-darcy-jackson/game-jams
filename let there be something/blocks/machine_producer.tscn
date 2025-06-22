@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dx0k2o5mjvquj"]
-
-[ext_resource type="PackedScene" uid="uid://de3oab5n00jbg" path="res://models/machine-producer.blend" id="1_4my6g"]
-
-[node name="machine-producer" instance=ExtResource("1_4my6g")]
-
-[node name="Cylinder-rigid" parent="." index="0"]
-mass = 1000.0

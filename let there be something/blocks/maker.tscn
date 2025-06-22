@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ck781vsc6kmwk"]
-
-[ext_resource type="PackedScene" uid="uid://b5sw0m7lppk0r" path="res://models/machine-maker.blend" id="1_cvmbu"]
-
-[node name="maker" type="Node3D"]
-
-[node name="machine-maker" parent="." instance=ExtResource("1_cvmbu")]
